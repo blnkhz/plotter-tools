@@ -1,34 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { useState } from 'react'
+import HorizontalLineRemesher from './components/HorizontalLineRemesher'
+
+const COMPONENTS = {
+  remesher: {
+    label: 'Horizontal Line Remesher',
+    element: <HorizontalLineRemesher />,
+  },
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selected, setSelected] = useState('remesher')
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div style={{ padding: '1rem' }}>
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+        {Object.entries(COMPONENTS).map(([key, { label }]) => (
+          <button
+            key={key}
+            onClick={() => setSelected(key)}
+            style={{
+              padding: '0.5rem 1rem',
+              cursor: 'pointer',
+              border: '1px solid #ccc',
+              backgroundColor: selected === key ? '#ddd' : '#fff',
+              fontWeight: selected === key ? 'bold' : 'normal',
+              borderRadius: '4px',
+            }}
+          >
+            {label}
+          </button>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      <div>{COMPONENTS[selected].element}</div>
+    </div>
   )
 }
 
