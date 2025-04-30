@@ -32,7 +32,6 @@ const ThreeJsViewer = ({
       style={{
         width: `${width}px`,
         height: `${height}px`,
-        border: '1px solid #ccc',
       }}
     />
   )
