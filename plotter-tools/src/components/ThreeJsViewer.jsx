@@ -27,13 +27,15 @@ const ThreeJsViewer = ({
   }, [geometry, clearScene, addToScene])
 
   return (
-    <div
-      ref={mountRef}
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-      }}
-    />
+    <div className="bg-white p-4 rounded-lg shadow-md">
+      <div
+        ref={mountRef}
+        style={{
+          width: `${width}px`,
+          height: `${height}px`,
+        }}
+      />
+    </div>
   )
 }
 
