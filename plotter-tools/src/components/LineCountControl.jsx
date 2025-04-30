@@ -2,17 +2,20 @@ import React from 'react'
 
 const LineCountControl = ({ linesCount, setLinesCount }) => {
   return (
-    <div>
-      <label>
-        Number of Lines:
-        <div>
+    <label className="block text-gray-700 text-sm font-medium mb-2">
+      Number of Lines:
+      <div className="mt-2 flex items-center gap-4">
+        <div className="w-64">
           <input
             type="range"
             min="10"
             max="200"
             value={linesCount}
             onChange={(e) => setLinesCount(parseInt(e.target.value))}
+            className="w-full h-2 bg-rose-100 rounded-lg appearance-none cursor-pointer accent-rose-500"
           />
+        </div>
+        <div>
           <input
             type="number"
             min="10"
@@ -22,11 +25,11 @@ const LineCountControl = ({ linesCount, setLinesCount }) => {
               const val = parseInt(e.target.value)
               if (!isNaN(val)) setLinesCount(val)
             }}
-            style={{ width: '4rem' }}
+            className="w-16 text-center px-2 py-1 border border-rose-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500"
           />
         </div>
-      </label>
-    </div>
+      </div>
+    </label>
   )
 }
 

@@ -17,7 +17,7 @@ export default function useThreeJsScene(mountRef, width = 500, height = 500) {
     }
 
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color('#d5bacc')
+    scene.background = new THREE.Color('#fdf2f8')
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000)
     camera.position.z = 3
 
