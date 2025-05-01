@@ -12,6 +12,8 @@ export default function HorizontalLineRemesher() {
     camera: null,
   })
 
+  const canvasSize = window.innerWidth < 500 ? window.innerWidth : 500
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
     if (!file) return
@@ -77,8 +79,8 @@ export default function HorizontalLineRemesher() {
         <div className="flex justify-center">
           <ThreeJsViewer
             geometry={geometry}
-            width={500}
-            height={500}
+            width={canvasSize}
+            height={canvasSize}
             onSceneReady={(sceneData) => {
               sceneRef.current = sceneData
             }}

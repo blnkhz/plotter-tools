@@ -109,7 +109,7 @@ export const generateSVGPaths = (geometry, linesCount, camera) => {
     const orderedChains = orderChains(chains)
 
     orderedChains.forEach((chain) => {
-      if (chain.length > 1) {
+      if (chain?.length > 1) {
         const d = [`M${chain[0].x},${chain[0].y}`]
         for (let i = 1; i < chain.length; i++) {
           d.push(`L${chain[i].x},${chain[i].y}`)
