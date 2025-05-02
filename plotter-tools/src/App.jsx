@@ -1,6 +1,7 @@
 import './App.css'
 import { useState } from 'react'
 import HorizontalLineRemesher from './components/HorizontalLineRemesher'
+import Header from './components/Header'
 
 const COMPONENTS = {
   remesher: {
@@ -13,22 +14,23 @@ function App() {
   const [selected, setSelected] = useState('remesher')
 
   return (
-    <div className="max-w-full">
-      <div className="flex gap-4 mb-4 items-center">
+    <div className="max-w-full bg-rose-50">
+      <Header />
+      <div className="flex gap-4 mb-4 items-center py-2 px-2">
         {Object.entries(COMPONENTS).map(([key, { label }]) => (
-          <button
+          <div
             key={key}
             onClick={() => setSelected(key)}
-            className={`px-4 py-2 cursor-pointer border border-rose-300 rounded-md ${
+            className={`px-2 py-1 cursor-pointer text-md relative ${
               selected === key
-                ? 'bg-rose-100 font-bold'
-                : 'bg-white font-normal'
+                ? 'font-bold text-green-700'
+                : 'font-normal text-gray-600 hover:text-rose-400'
             }`}
           >
             {label}
-          </button>
+          </div>
         ))}
-        <p className="text-xs text-gray-500">- adding more soon!</p>
+        <p className="text-gray-400 text-sm italic">adding more soon!</p>
       </div>
       <div>{COMPONENTS[selected].element}</div>
     </div>
