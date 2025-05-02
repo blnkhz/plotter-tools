@@ -122,15 +122,19 @@ export const generateSVGPaths = (geometry, linesCount, camera) => {
   return paths
 }
 
+export const createSVG = (svgPaths) => {
+  const svgContent = `<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'>
+  <path d='${svgPaths.join(
+    ' '
+  )}' fill='none' stroke='black' stroke-width='0.5'/>
+</svg>`
+  return svgContent
+}
+
 export const downloadSVG = (svgPaths, filename = 'lines_remesh.svg') => {
   if (!svgPaths || svgPaths.length === 0) return
 
-  const svgContent = `<svg xmlns='http://www.w3.org/2000/svg' width='500' height='500'>
-    <path d='${svgPaths.join(
-      ' '
-    )}' fill='none' stroke='black' stroke-width='0.5'/>
-  </svg>`
-
+  const svgContent = createSVG(svgPaths)
   const blob = new Blob([svgContent], { type: 'image/svg+xml' })
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
