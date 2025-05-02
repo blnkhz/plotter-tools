@@ -12,7 +12,7 @@ const LineCountControl = ({ linesCount, setLinesCount }) => {
             max="200"
             value={linesCount}
             onChange={(e) => setLinesCount(parseInt(e.target.value))}
-            className="w-full h-2 bg-rose-100 rounded-lg appearance-none cursor-pointer accent-rose-500"
+            className="w-full h-2 bg-rose-100 rounded-lg appearance-none cursor-pointer accent-green-700"
           />
         </div>
         <div>
@@ -25,7 +25,7 @@ const LineCountControl = ({ linesCount, setLinesCount }) => {
               const val = parseInt(e.target.value)
               if (!isNaN(val)) setLinesCount(val)
             }}
-            className="w-16 text-center px-2 py-1 border border-rose-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500"
+            className="w-16 text-center px-2 py-1 border border-green-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-700 focus:border-green-700"
           />
         </div>
       </div>
