@@ -19,17 +19,18 @@ const WhatIsThis = () => {
         </button>
       </div>
       <p className="text-gray-600 mb-4">
-        Horizontal Line Remesher (AKA Slice-o-Matic 3000, LineLasagna Maker,
-        Flat Earth Engine, OBJ-to-Wow-J Converter) is a browser-based tool for
-        digital artists, designers, and plotter nerds who dream in X and Y. This
-        app takes your fancy 3D OBJ models and slices them into sleek, hypnotic
-        horizontal lines, generating SVG files that your pen plotter will love.
+        Parallel Remesher (AKA Slice-o-Matic 3000, LineLasagna Maker, Flat Earth
+        Engine, OBJ-to-Wow-J Converter) is a browser-based tool for digital
+        artists, designers, and plotter nerds who dream in X and Y. This app
+        takes your fancy 3D OBJ models and slices them into sleek, hypnotic
+        parallel lines, generating SVG files that your pen plotter will love.
         Great for making your art look like it fell into a fax machine and came
         out fabulous.
         <br />
         <br />
         This is version 0.0.0-alpha, so please don't panic (or bite) if
-        something breaks — the bugs are probably just trying to become features 🦋
+        something breaks — the bugs are probably just trying to become features
+        🦋
       </p>
       {isExpanded && (
         <div className="animate-fadeIn">
