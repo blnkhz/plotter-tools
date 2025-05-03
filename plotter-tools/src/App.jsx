@@ -5,7 +5,7 @@ import Header from './components/Header'
 
 const COMPONENTS = {
   remesher: {
-    label: 'Horizontal Line Remesher',
+    label: 'Parallel Remesher',
     element: <HorizontalLineRemesher />,
   },
 }
