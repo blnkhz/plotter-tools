@@ -16,7 +16,7 @@ export default function HorizontalLineRemesher() {
   const canvasSize = window.innerWidth < 500 ? window.innerWidth : 500
 
   useEffect(() => {
-    fetch('/sample.obj')
+    fetch('https://blnkhz.github.io/plotter-tools/sample.obj')
       .then((res) => res.text())
       .then((objText) => {
         const parsedGeometry = parseObjFile(objText)
