@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import ThreeJsViewer from './ThreeJsViewer'
 import LineCountControl from './LineCountControl'
 import { parseObjFile } from '../utils/geometryUtils'
@@ -14,6 +14,20 @@ export default function HorizontalLineRemesher() {
   })
 
   const canvasSize = window.innerWidth < 500 ? window.innerWidth : 500
+
+  useEffect(() => {
+    fetch('/sample.obj')
+      .then((res) => res.text())
+      .then((objText) => {
+        const parsedGeometry = parseObjFile(objText)
+        if (parsedGeometry) {
+          setGeometry(parsedGeometry)
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load sample.obj:', err)
+      })
+  }, [])
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0]
@@ -89,7 +103,7 @@ export default function HorizontalLineRemesher() {
             disabled={!geometry}
             className={`px-4 py-2 rounded-md font-medium ${
               geometry
-                ? 'bg-green-700 text-white hover:bg-green-600 active:bg-green-500'
+                ? 'bg-green-700 text-white hover:bg-green-600 active:bg-green-700'
                 : 'bg-gray-200 text-gray-500 cursor-not-allowed'
             } transition-colors`}
           >
