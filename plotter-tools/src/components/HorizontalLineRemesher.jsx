@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import ThreeJsViewer from './ThreeJsViewer'
-import LineCountControl from './LineCountControl'
+import SliderControl from './SliderControl'
 import { parseObjFile } from '../utils/geometryUtils'
 import { generateSVGPaths, downloadSVG } from '../utils/svgUtils'
 import WhatIsThis from './WhatIsThis'
@@ -81,9 +81,13 @@ export default function HorizontalLineRemesher() {
           </p>
 
           <div className="mt-6">
-            <LineCountControl
-              linesCount={linesCount}
-              setLinesCount={setLinesCount}
+            <SliderControl
+              label="Number of Lines"
+              value={linesCount}
+              setValue={setLinesCount}
+              min={10}
+              max={200}
+              step={1}
             />
           </div>
         </div>
