@@ -3,12 +3,78 @@ import ThreeJsViewer from './ThreeJsViewer'
 import SliderControl from './SliderControl'
 import { parseObjFile } from '../utils/geometryUtils'
 import { generateSVGPaths, downloadSVG } from '../utils/svgUtils'
-import WhatIsThis from './WhatIsThis'
+import ExpandableCard from './ExpandableCard'
+
+const InfoCard = () => {
+  const mainContent = (
+    <>
+      Parallel Remesher (AKA Slice-o-Matic 3000, LineLasagna Maker, Flat Earth
+      Engine, OBJ-to-Wow-J Converter) is a browser-based tool for digital
+      artists, designers, and plotter nerds who dream in X and Y. This app takes
+      your fancy 3D OBJ models and slices them into sleek, hypnotic parallel
+      lines, generating SVG files that your pen plotter will love. Great for
+      making your art look like it fell into a fax machine and came out
+      fabulous.
+      <br />
+      <br />
+      This is version 0.0.0-alpha, so please don't panic (or bite) if something
+      breaks — the bugs are probably just trying to become features 🦋
+    </>
+  )
+
+  const features = [
+    {
+      name: 'Adjustable Line Density',
+      description: 'Control the detail and density of your plots with a slider',
+    },
+    {
+      name: 'Interactive Preview',
+      description:
+        'Rotate and pan the 3D model to create the perfect composition',
+    },
+    {
+      name: 'One-Click Export',
+      description:
+        'Generate ready-to-plot SVG files with a single button press',
+    },
+  ]
+
+  const images = [
+    {
+      caption: 'Before (screenshot of the model used, created in Blender):',
+      src: './before.png',
+      alt: '3D model in Blender',
+    },
+    {
+      caption: 'Exported SVGs with different line density:',
+      src: './after2.svg',
+      alt: 'SVG output with low density',
+    },
+    {
+      caption: '',
+      src: './after3.svg',
+      alt: 'SVG output with medium density',
+    },
+    {
+      caption: '',
+      src: './after.svg',
+      alt: 'SVG output with high density',
+    },
+  ]
+  return (
+    <ExpandableCard
+      title="What is this?"
+      mainContent={mainContent}
+      features={features}
+      images={images}
+      footerText="Free to use & open-source (づ｡◕‿‿◕｡)づ"
+    />
+  )
+}
 
 export default function HorizontalLineRemesher() {
   const [linesCount, setLinesCount] = useState(50)
   const [geometry, setGeometry] = useState(null)
-  const viewerRef = useRef()
   const sceneRef = useRef({
     camera: null,
   })
@@ -58,7 +124,7 @@ export default function HorizontalLineRemesher() {
 
   return (
     <div className="font-sans p-6 max-w-4xl mx-auto">
-      <WhatIsThis />
+      <InfoCard />
       <div className="space-y-6">
         <div className="bg-white p-4 rounded-lg shadow-md max-w-md mx-auto w-4/5">
           <label className="block text-gray-700 font-medium mb-2">
