@@ -143,3 +143,120 @@ export const downloadSVG = (svgPaths, filename = 'lines_remesh.svg') => {
   link.click()
   URL.revokeObjectURL(url)
 }
+
+export const processImageToDitheredSvg = (img, canvas, options) => {
+  const { cellSize, brightness, contrast, markShape, strokeWidth } = options
+  const ctx = canvas.getContext('2d')
+  const bayerMatrix = [
+    [0, 8, 2, 10],
+    [12, 4, 14, 6],
+    [3, 11, 1, 9],
+    [15, 7, 13, 5],
+  ]
+
+  canvas.width = 500
+  canvas.height = 500
+
+  const scale = Math.min(500 / img.width, 500 / img.height)
+  const outputWidth = Math.round(img.width * scale)
+  const outputHeight = Math.round(img.height * scale)
+
+  ctx.fillStyle = 'white'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+  ctx.drawImage(img, 0, 0, outputWidth, outputHeight)
+
+  const imgData = ctx.getImageData(0, 0, outputWidth, outputHeight)
+  const { data, width, height } = imgData
+
+  for (let i = 0; i < data.length; i += 4) {
+    if (data[i + 3] < 255) {
+      const alpha = data[i + 3] / 255
+      data[i] = data[i] * alpha + 255 * (1 - alpha)
+      data[i + 1] = data[i + 1] * alpha + 255 * (1 - alpha)
+      data[i + 2] = data[i + 2] * alpha + 255 * (1 - alpha)
+      data[i + 3] = 255
+    }
+  }
+
+  for (let i = 0; i < data.length; i += 4) {
+    let gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]
+    gray += brightness
+    gray = (gray - 128) * contrast + 128
+    gray = Math.max(0, Math.min(255, gray))
+    data[i] = data[i + 1] = data[i + 2] = gray
+  }
+  ctx.putImageData(imgData, 0, 0)
+
+  const cellsX = Math.floor(width / cellSize)
+  const cellsY = Math.floor(height / cellSize)
+
+  let pathData = ''
+  const circleApprox = 'polygon'
+
+  for (let cellY = 0; cellY < cellsY; cellY++) {
+    for (let cellX = 0; cellX < cellsX; cellX++) {
+      const x = Math.floor(cellX * cellSize)
+      const y = Math.floor(cellY * cellSize)
+
+      const i = (y * width + x) * 4
+      const gray = data[i]
+      const threshold = (bayerMatrix[cellY % 4][cellX % 4] / 16) * 255
+
+      if (gray < threshold) {
+        const cx = x + cellSize / 2
+        const cy = y + cellSize / 2
+        const r = cellSize / 2
+
+        switch (markShape) {
+          case 'circle':
+            if (circleApprox === 'diamond') {
+              pathData += `M${cx} ${cy - r} L${cx + r} ${cy} L${cx} ${
+                cy + r
+              } L${cx - r} ${cy} Z `
+            } else {
+              const points = []
+              for (let angle = 0; angle < 360; angle += 45) {
+                const rad = (angle * Math.PI) / 180
+                const px = cx + r * Math.cos(rad)
+                const py = cy + r * Math.sin(rad)
+                points.push([px, py])
+              }
+              pathData += `M${points
+                .map((p) => `${p[0]} ${p[1]}`)
+                .join(' L')} Z `
+            }
+            break
+
+          case 'x':
+            pathData += `M${x} ${y} l${cellSize} ${cellSize} M${
+              x + cellSize
+            } ${y} l-${cellSize} ${cellSize} `
+            break
+
+          case 'cross':
+            pathData += `M${cx} ${y} v${cellSize} M${x} ${cy} h${cellSize} `
+            break
+
+          default:
+            pathData += `M${x} ${y}h${cellSize}v${cellSize}h-${cellSize}Z `
+            break
+        }
+      }
+    }
+  }
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}">
+      <path d="${pathData.trim()}" fill="none" stroke="black" stroke-width="${strokeWidth}" stroke-linecap="round" />
+    </svg>
+  `
+
+  return svg.trim()
+}
+
+export const extractSvgPaths = (svgContent) => {
+  const pathMatch = svgContent.match(/<path[^>]*d="([^"]*)"[^>]*\/>/)
+  const pathData = pathMatch ? pathMatch[1] : ''
+  return [pathData.trim()]
+}
