@@ -4,7 +4,7 @@ const WhatIsThis = () => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   return (
-    <div className="bg-white border border-rose-100 rounded-lg p-6 mb-8 max-w-3xl mx-auto">
+    <div className="bg-white shadow-md rounded-lg p-6 mb-8 max-w-3xl mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl font-bold text-green-700">What is this?</h2>
         <button
