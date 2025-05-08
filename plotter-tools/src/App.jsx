@@ -2,11 +2,16 @@ import './App.css'
 import { useState } from 'react'
 import HorizontalLineRemesher from './components/HorizontalLineRemesher'
 import Header from './components/Header'
+import DitherToSvg from './components/Dithering'
 
 const COMPONENTS = {
   remesher: {
     label: 'Parallel Remesher',
     element: <HorizontalLineRemesher />,
+  },
+  dither: {
+    label: 'Ordered Dithering',
+    element: <DitherToSvg />,
   },
 }
 
