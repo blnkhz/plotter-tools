@@ -12,8 +12,8 @@ const ExpandableCard = ({
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 mb-8 max-w-3xl mx-auto">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-green-700">{title}</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl text-green-700">{title}</h2>
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="text-green-700 hover:text-green-800 text-sm font-medium"
@@ -25,9 +25,10 @@ const ExpandableCard = ({
           )}
         </button>
       </div>
-      <div className="text-gray-600 mb-4">{mainContent}</div>
+
       {isExpanded && (
-        <div className="animate-fadeIn">
+        <div className="animate-fadeIn mt-4">
+          <div className="text-gray-600 mb-4">{mainContent}</div>
           {expandedContent}
           {features.length > 0 && (
             <>
@@ -57,7 +58,7 @@ const ExpandableCard = ({
               ))}
             </div>
           )}
-          <p className="text-gray-600 mt-4 italic">
+          <p className="text-gray-600 mt-4 italic text-sm">
             Free to use & open-source (づ｡◕‿‿◕｡)づ
           </p>
         </div>
