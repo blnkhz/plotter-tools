@@ -1,10 +1,87 @@
 import React, { useRef, useState, useEffect } from 'react'
 import SliderControl from './SliderControl'
+import ExpandableCard from './ExpandableCard'
 import {
   downloadSVG,
   extractSvgPaths,
   processImageToDitheredSvg,
 } from '../utils/svgUtils'
+
+const InfoCard = () => {
+  const mainContent = (
+    <>
+      <a
+        href="https://en.wikipedia.org/wiki/Ordered_dithering"
+        target="_blank"
+        className="text-rose-500 hover:text-rose-700"
+      >
+        Ordered Dithering
+      </a>{' '}
+      is a delightfully nerdy image processing technique that transforms
+      grayscale images into mesmerizing patterns of crisp black-and-white dots —
+      perfect for plotters and vintage display aesthetics. At its core, ordered
+      dithering uses a tiny repeating grid of threshold values - like the Bayer
+      matrix - to scan methodically across your image. For each pixel, it asks a
+      simple question: Is this pixel darker than the corresponding matrix value?
+      If yes: draw a dot (black). If no: leave it blank (white). This creates a
+      tidy, structured illusion of shading, where darker regions get more dots
+      clustered tightly together while lighter regions breathe with more white
+      space. Think of it as pixel pointillism, but with robot discipline.
+      Instead of smooth gradients, you get a rhythmic constellation of dots
+      arranged in satisfying geometric patterns. It's not chaotic like{' '}
+      <a
+        href="https://en.wikipedia.org/wiki/Error_diffusion"
+        target="_blank"
+        className="text-rose-500 hover:text-rose-700"
+      >
+        error diffusion
+      </a>
+      ; it's organized cool — and ideal for pen plotters because every dot is
+      discrete and precisely placed.
+    </>
+  )
+
+  const images = [
+    {
+      caption:
+        'thank you for making it this far, enjoy this dithered half-portrait of my cat:',
+      src: './dith.svg',
+      alt: 'a picture of my cat after ordered dithering',
+    },
+  ]
+
+  const features = [
+    {
+      name: 'Image to SVG Conversion',
+      description:
+        'Transform any image into a clean SVG format with customizable dithering patterns',
+    },
+    {
+      name: 'Adjustable Parameters',
+      description:
+        'Fine-tune cell size, brightness, contrast, and stroke width to get exactly the look you want',
+    },
+    {
+      name: 'Multiple Mark Shapes',
+      description:
+        'Choose between squares, circles, X marks, or crosses for different visual effects',
+    },
+    {
+      name: 'One-Click Export',
+      description:
+        'Generate ready-to-plot SVG files with a single button press',
+    },
+  ]
+
+  return (
+    <ExpandableCard
+      title="What is this?"
+      mainContent={mainContent}
+      features={features}
+      images={images}
+    />
+  )
+}
 
 export default function DitherToSvg() {
   const canvasRef = useRef(null)
@@ -15,6 +92,7 @@ export default function DitherToSvg() {
   const [contrast, setContrast] = useState(1)
   const [markShape, setMarkShape] = useState('square')
   const [strokeWidth, setStrokeWidth] = useState(0.5)
+  const canvasSize = window.innerWidth < 500 ? window.innerWidth : 500
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0]
@@ -52,6 +130,7 @@ export default function DitherToSvg() {
 
   return (
     <div className="p-6 max-w-4xl mx-auto min-h-screen">
+      <InfoCard />
       <div className="space-y-6">
         <div className="bg-white p-4 rounded-lg shadow-md max-w-md mx-auto w-4/5">
           <label className="block text-gray-700 font-medium mb-2">
@@ -141,8 +220,8 @@ export default function DitherToSvg() {
                 >
                   <option value="square">Square</option>
                   <option value="circle">Circle</option>
-                  <option value="x">X</option>
-                  <option value="cross">Cross</option>
+                  <option value="x">x</option>
+                  <option value="cross">+</option>
                 </select>
               </label>
             </div>
@@ -150,9 +229,9 @@ export default function DitherToSvg() {
         </div>
         <canvas
           ref={canvasRef}
-          width={500}
-          height={500}
-          style={{ display: 'none', width: '500px', height: '500px' }}
+          width={canvasSize}
+          height={canvasSize}
+          style={{ display: 'none' }}
         />
         {svgContent && (
           <>
@@ -160,8 +239,8 @@ export default function DitherToSvg() {
               <div
                 className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden"
                 style={{
-                  width: 500,
-                  height: 500,
+                  width: canvasSize,
+                  height: canvasSize,
                 }}
                 dangerouslySetInnerHTML={{ __html: svgContent }}
               />
