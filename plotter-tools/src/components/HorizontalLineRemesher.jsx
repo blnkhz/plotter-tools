@@ -61,13 +61,13 @@ const InfoCard = () => {
       alt: 'SVG output with high density',
     },
   ]
+
   return (
     <ExpandableCard
       title="What is this?"
       mainContent={mainContent}
       features={features}
       images={images}
-      footerText="Free to use & open-source (づ｡◕‿‿◕｡)づ"
     />
   )
 }
