@@ -3,6 +3,7 @@ import { useState } from 'react'
 import HorizontalLineRemesher from './components/HorizontalLineRemesher'
 import Header from './components/Header'
 import DitherToSvg from './components/Dithering'
+import WaveformSVGPlotter from './components/Audio'
 
 const COMPONENTS = {
   remesher: {
@@ -12,6 +13,10 @@ const COMPONENTS = {
   dither: {
     label: 'Ordered Dithering',
     element: <DitherToSvg />,
+  },
+  audio: {
+    label: 'Audio to SVG',
+    element: <WaveformSVGPlotter />,
   },
 }
 
